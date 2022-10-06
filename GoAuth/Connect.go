@@ -1,8 +1,12 @@
 package GoAuth
 
 import (
+	"os"
+	"context"
+	"time"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func Connect() (*mongo.Client,error) {
