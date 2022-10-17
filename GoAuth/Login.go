@@ -11,7 +11,7 @@ func Login[T map[string] any](mongoClient mongo.Client,collectionName string,dat
 	if collectionName==""{
 		return errors.New(fmt.Sprint(collectionName,"is not a valid collection name"))
 	}
-	if err:=data[key];err!=nil{
+	if _,exist:=data[key];!exist{
 		return errors.New(fmt.Sprint(key,"is not a valid key"))
 	} else{
 		fmt.Println(data[key]);
