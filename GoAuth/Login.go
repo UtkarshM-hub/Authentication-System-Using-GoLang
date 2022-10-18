@@ -20,8 +20,9 @@ func Login(mongoClient mongo.Client,DatabaseName string,collectionName string,da
 	result:=struct{
 		name string
 	}{}
-	user:=bson.D{primitive.E{Key:key,Value:data[key]}}
-	mongoClient.Database(DatabaseName).Collection(collectionName).FindOne(context.TODO(),user).Decode(&result)
+	// user:=bson.D{primitive.E{Key:key,Value:data[key]}}
+	mongoClient.Database("GoAuth").Collection("user").FindOne(context.TODO(),bson.D{primitive.E{Key: "name",Value: "UtkarshM-hub"}}).Decode(&result.name)
+	// mongoClient.Database(DatabaseName).Collection(collectionName).FindOne(context.TODO(),user).Decode(&result)
 	fmt.Println(result)
 	return nil
 }
