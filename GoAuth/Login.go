@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -19,7 +20,7 @@ func Login(mongoClient mongo.Client,DatabaseName string,collectionName string,da
 	result:=struct{
 		name string
 	}{}
-	user:=bson.D{{key,data[key]}}
+	user:=bson.D{primitive.E{Key:key,Value:data[key]}}
 	mongoClient.Database(DatabaseName).Collection(collectionName).FindOne(context.TODO(),user).Decode(&result)
 	fmt.Println(result)
 	return nil
