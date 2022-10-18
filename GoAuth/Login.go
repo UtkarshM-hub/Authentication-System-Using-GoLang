@@ -17,11 +17,11 @@ func Login(mongoClient mongo.Client,DatabaseName string,collectionName string,da
 	if _,exist:=data[key];!exist{
 		return errors.New(fmt.Sprint(key," is not a valid key"));
 	} 
-	result:=struct{
+	var result=struct{
 		name string
 	}{}
 	// user:=bson.D{primitive.E{Key:key,Value:data[key]}}
-	mongoClient.Database("GoAuth").Collection("user").FindOne(context.TODO(),bson.D{primitive.E{Key: "name",Value: "UtkarshM-hub"}}).Decode(&result.name)
+	mongoClient.Database("GoAuth").Collection("user").FindOne(context.TODO(),bson.D{primitive.E{Key: "name",Value: "UtkarshM-hub"}}).Decode(&result)
 	// mongoClient.Database(DatabaseName).Collection(collectionName).FindOne(context.TODO(),user).Decode(&result)
 	fmt.Println(result)
 	return nil
