@@ -11,18 +11,31 @@ import (
 )
 
 func Login(mongoClient mongo.Client,DatabaseName string,collectionName string,data map[string] any,key string) (error) {
+
+	// check if the collection name is valid or not
 	if collectionName==""{
 		return errors.New(fmt.Sprint(collectionName,"is not a valid collection name"));
 	}
+
+	// check if the given property is valid or not
 	if _,exist:=data[key];!exist{
 		return errors.New(fmt.Sprint(key," is not a valid key"));
 	} 
-	// var result=struct{
-	// 	name string
-	// }{}
-	// user:=bson.D{primitive.E{Key:key,Value:data[key]}}
-	mongoClient.Database("GoAuth").Collection("user").FindOne(context.TODO(),bson.D{primitive.E{Key: "name",Value: "UtkarshM-hub"}})
-	// mongoClient.Database(DatabaseName).Collection(collectionName).FindOne(context.TODO(),user).Decode(&result)
-	fmt.Println("this is the result")
+
+	var result bson.M
+
+	// create a query out of user data
+	user:=bson.D{primitive.E{Key:key,Value:data[key]}}
+
+	// find the user in database
+	if err:=mongoClient.Database(DatabaseName).Collection(collectionName).FindOne(context.TODO(),user).Decode(&result); err!=nil{
+		// return error if there is no data in database
+		return errors.New("user does not exist");
+	}
+
+	// return error if the user does not exist
+	if(len(result)==0){
+		return errors.New("user does not exist")
+	}
 	return nil
 }
